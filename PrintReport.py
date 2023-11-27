@@ -25,10 +25,11 @@ def getReportTxt():
 
 def getData(datapath):
     global Objects
-    connCheck = sqlite3.connect(datapath)
-    cCheck = connCheck.cursor()
-    connInit = sqlite3.connect(initDB_Path)
-    cInit = connInit.cursor()
+    try:
+        connCheck = sqlite3.connect(datapath)
+        cCheck = connCheck.cursor()
+        connInit = sqlite3.connect(initDB_Path)
+        cInit = connInit.cursor()
     cCheck.execute("select Rule_Type from FILEDB group by Rule_Type;")
     Rule_Type = cCheck.fetchall()
     for i in Rule_Type:
@@ -61,10 +62,14 @@ def getData(datapath):
                     row['ORIGIN']['STAT'] = MystatFormated(k[1]).__dict__
                     row['ORIGIN']['MD5'] = k[2]
                 Objects[i[0]][j[0]].append(row)
-    cInit.close()
-    connInit.close()
-    cCheck.close()
-    connCheck.close()
+    except sqlite3.Error as e:
+        print("SQLite error:", e)
+    finally:
+        if connCheck:
+            connCheck.close()
+        if connInit:
+            connInit.close()
+
     return Objects
 
 def getReportSummary(ReportSummary):
