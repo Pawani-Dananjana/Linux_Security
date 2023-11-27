@@ -69,7 +69,7 @@ def queryFileData(c, tablename, path):
 # Example usage
 if __name__ == "__main__":
     # Connect to the database (replace 'your_database.db' with your actual database file)
-    conn = sqlite3.connect('Initial.db')
+    conn = sqlite3.connect('init.db')
     cursor = conn.cursor()
 
     # Example: Create a table named 'FILEDB'
