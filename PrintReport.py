@@ -30,7 +30,9 @@ def getData(datapath):
         cCheck = connCheck.cursor()
         connInit = sqlite3.connect(initDB_Path)
         cInit = connInit.cursor()
-    cCheck.execute("select Rule_Type from FILEDB group by Rule_Type;")
+    cCheck.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='FILEDB';")
+    print(cCheck.fetchall())
+    cCheck.execute("cCheck.execute("SELECT Rule_Type FROM FILEDB GROUP BY Rule_Type;")
     Rule_Type = cCheck.fetchall()
     for i in Rule_Type:
         Objects[i[0]] = {}
